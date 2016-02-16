@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { createPost } from '../actions/index';
 import { bindActionCreators } from 'redux';
@@ -7,12 +7,28 @@ import { Link } from 'react-router';
 class PostsNew extends Component {
   constructor(props) {
     super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  static contextTypes = {
+    // This will tell react to give me access to the context of a parent component
+    // In this case, we want access to router's context
+    router: PropTypes.object
+  };
+
+  onSubmit(props) {
+    this.props.createPost(props)
+      .then(() => {
+        // blog post was created
+        // we navigate by calling this.context.router.push with the new path to navigate to
+        this.context.router.push('/');
+      });
   }
   render () {
     const { fields: {title, categories, content}, handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.props.createPost)}>
+      <form onSubmit={handleSubmit(this.onSubmit)}>
         <h2>Create A New Post</h2>
         <div className={`form-group ${(title.touched && title.invalid) ? 'has-danger' : ''}`}>
           <label>Title</label>
