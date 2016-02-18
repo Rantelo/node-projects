@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { fetchPost, deletePost } from '../actions/index';
+import { fetchPost, deletePost, clearPost } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
@@ -25,6 +25,10 @@ class PostsShow extends Component {
     this.props.fetchPost(this.props.params.id);
   }
 
+  componentWillUnmount() {
+    this.props.clearPost();
+  }
+
   render() {
     const { post } = this.props;
 
@@ -45,7 +49,7 @@ class PostsShow extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchPost, deletePost}, dispatch);
+  return bindActionCreators({ fetchPost, deletePost, clearPost }, dispatch);
 }
 
 function mapStateToProps(state) {

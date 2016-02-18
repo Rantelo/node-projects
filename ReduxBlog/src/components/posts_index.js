@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchPosts } from '../actions/index';
+import { fetchPosts, clearPosts } from '../actions/index';
 import { Link } from 'react-router';
 
 class PostsIndex extends Component {
@@ -9,7 +9,16 @@ class PostsIndex extends Component {
     this.props.fetchPosts();
   }
 
+  componentWillUnmount() {
+    this.props.clearPosts();
+  }
+
   renderPosts() {
+    const { posts } = this.props;
+
+    if (!posts) {
+      return <li className="list-group-item" key="1">Loading...</li>;
+    }
     return this.props.posts.map((post) => {
       return (
         <li className="list-group-item" key={post.id}>
@@ -41,7 +50,7 @@ function mapStateToProps(state) {
   return { posts: state.posts.all };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchPosts }, dispatch);
+  return bindActionCreators({ fetchPosts, clearPosts }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsIndex);

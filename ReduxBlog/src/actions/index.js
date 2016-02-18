@@ -4,6 +4,8 @@ export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_POST  = 'FETCH_POST';
 export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const CLEAR_POSTS = 'CLEAR_POSTS';
+export const CLEAR_POST  = 'CLEAR_POST';
 
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api';
 const API_KEY  = '?key=rantelo';
@@ -40,6 +42,24 @@ export function deletePost(id) {
 
   return {
     type: DELETE_POST,
+    payload: request
+  }
+}
+
+export function clearPosts() {
+  const request = [];
+
+  return {
+    type: CLEAR_POSTS,
+    payload: request
+  }
+}
+
+export function clearPost() {
+  const request = null;
+
+  return {
+    type: CLEAR_POST,
     payload: request
   }
 }
