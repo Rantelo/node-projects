@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import ContributorsReducer from './reducer_contributor';
 
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  demo: ContributorsReducer,
 });
 
 export default rootReducer;
